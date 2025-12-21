@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useMemo } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { listings } from "@/data/listings";
 import { useSearch } from "@/context/SearchContext";
 import ScrollAnimation from "./ScrollAnimation";
@@ -56,7 +56,7 @@ export default function Listings() {
     }
   };
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: {},
     visible: {
       transition: {
@@ -65,7 +65,7 @@ export default function Listings() {
     },
   };
 
-  const cardVariants = {
+  const cardVariants: Variants = {
     hidden: {
       opacity: 0,
       y: 30,
@@ -75,7 +75,7 @@ export default function Listings() {
       y: 0,
       transition: {
         duration: 0.5,
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease: [0.25, 0.46, 0.45, 0.94] as const,
       },
     },
   };
