@@ -55,13 +55,13 @@ export default function About() {
               <StaggerContainer className="grid grid-cols-3 gap-8 py-8 border-y border-[var(--border)] mb-8" staggerDelay={0.15}>
                 <StaggerItem>
                   <div>
-                    <p className="font-serif text-3xl text-[var(--foreground)]">$50M+</p>
+                    <p className="font-serif text-3xl text-[var(--foreground)]">$2M+</p>
                     <p className="text-[var(--muted)] text-sm mt-1">Sales Volume</p>
                   </div>
                 </StaggerItem>
                 <StaggerItem>
                   <div>
-                    <p className="font-serif text-3xl text-[var(--foreground)]">75+</p>
+                    <p className="font-serif text-3xl text-[var(--foreground)]">20+</p>
                     <p className="text-[var(--muted)] text-sm mt-1">Families Helped</p>
                   </div>
                 </StaggerItem>
