@@ -69,13 +69,13 @@ export default function Footer() {
             <ul className="space-y-4 text-[var(--muted)] text-sm">
               <li>Palm Beach County, Florida</li>
               <li>
-                <a href="tel:+15615550123" className="hover:text-[var(--foreground)] transition-colors">
-                  +1 (561) 555-0123
+                <a href="tel:+15618021137" className="hover:text-[var(--foreground)] transition-colors">
+                  (561) 802-1137
                 </a>
               </li>
               <li>
-                <a href="mailto:rene@reneguerra.com" className="hover:text-[var(--foreground)] transition-colors">
-                  rene@reneguerra.com
+                <a href="mailto:contact@reneguerrarealtor.com" className="hover:text-[var(--foreground)] transition-colors">
+                  contact@reneguerrarealtor.com
                 </a>
               </li>
             </ul>

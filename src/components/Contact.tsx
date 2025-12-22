@@ -60,8 +60,8 @@ export default function Contact() {
                   <p className="text-[var(--muted)] text-[10px] tracking-[0.2em] uppercase mb-2">
                     Telephone
                   </p>
-                  <a href="tel:+15615550123" className="text-[var(--foreground)] text-lg hover:opacity-70 transition-opacity">
-                    +1 (561) 555-0123
+                  <a href="tel:+15618021137" className="text-[var(--foreground)] text-lg hover:opacity-70 transition-opacity">
+                    (561) 802-1137
                   </a>
                 </div>
 
@@ -69,8 +69,8 @@ export default function Contact() {
                   <p className="text-[var(--muted)] text-[10px] tracking-[0.2em] uppercase mb-2">
                     Email
                   </p>
-                  <a href="mailto:rene@reneguerra.com" className="text-[var(--foreground)] text-lg hover:opacity-70 transition-opacity">
-                    rene@reneguerra.com
+                  <a href="mailto:contact@reneguerrarealtor.com" className="text-[var(--foreground)] text-lg hover:opacity-70 transition-opacity">
+                    contact@reneguerrarealtor.com
                   </a>
                 </div>
 

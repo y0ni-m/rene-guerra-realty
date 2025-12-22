@@ -236,10 +236,10 @@ export default function PropertyDetail({ property }: Props) {
 
                   <div className="space-y-4">
                     <a
-                      href="tel:+15615550123"
+                      href="tel:+15618021137"
                       className="block w-full py-3 border border-[var(--foreground)] text-[var(--foreground)] text-center text-[11px] tracking-[0.15em] uppercase hover:bg-[var(--foreground)] hover:text-[var(--background)] transition-colors"
                     >
-                      +1 (561) 555-0123
+                      (561) 802-1137
                     </a>
                     <button
                       onClick={() => setShowContactForm(!showContactForm)}
