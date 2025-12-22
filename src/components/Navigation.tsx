@@ -30,8 +30,8 @@ export default function Navigation() {
   ];
 
   // On detail pages, always show solid background
-  // On home page, show transparent until scrolled
-  const showSolidBg = isDetailPage || isScrolled;
+  // On home page, show transparent until scrolled or mobile menu is open
+  const showSolidBg = isDetailPage || isScrolled || isMobileMenuOpen;
 
   return (
     <nav
