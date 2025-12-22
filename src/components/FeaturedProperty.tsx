@@ -7,7 +7,7 @@ import ScrollAnimation, { StaggerContainer, StaggerItem } from "./ScrollAnimatio
 
 export default function FeaturedProperty() {
   return (
-    <section id="featured" className="py-24 md:py-32 bg-[var(--warm-gray)] dark:bg-[var(--background)]">
+    <section id="featured" className="py-16 md:py-24 bg-[var(--warm-gray)] dark:bg-[var(--background)]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Section Header */}
         <ScrollAnimation className="text-center mb-16">

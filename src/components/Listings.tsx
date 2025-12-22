@@ -81,7 +81,7 @@ export default function Listings() {
   };
 
   return (
-    <section id="listings" className="py-24 md:py-32 bg-[var(--background)]">
+    <section id="listings" className="py-16 md:py-24 bg-[var(--background)]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Section Header */}
         <ScrollAnimation className="text-center mb-16">

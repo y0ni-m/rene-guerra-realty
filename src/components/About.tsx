@@ -6,13 +6,13 @@ import ScrollAnimation, { StaggerContainer, StaggerItem } from "./ScrollAnimatio
 
 export default function About() {
   return (
-    <section id="about" className="py-24 md:py-32 bg-[var(--background)]">
+    <section id="about" className="py-16 md:py-24 bg-[var(--background)]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           {/* Image */}
           <ScrollAnimation direction="left">
-            <div className="relative">
-              <div className="relative h-[600px] overflow-hidden">
+            <div className="relative overflow-hidden">
+              <div className="relative h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden">
                 <Image
                   src={reneHeadshot}
                   alt="Rene Guerra"
@@ -22,8 +22,8 @@ export default function About() {
                   placeholder="blur"
                 />
               </div>
-              {/* Decorative line */}
-              <div className="absolute -bottom-8 -right-8 w-32 h-32 border border-[var(--border)]" />
+              {/* Decorative line - hidden on mobile */}
+              <div className="hidden md:block absolute -bottom-8 -right-8 w-32 h-32 border border-[var(--border)]" />
             </div>
           </ScrollAnimation>
 
