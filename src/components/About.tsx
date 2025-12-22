@@ -75,7 +75,7 @@ export default function About() {
 
               {/* Credentials */}
               <div className="space-y-3 text-[var(--muted)] text-sm">
-                <p>Licensed Real Estate Professional — Florida</p>
+                <p>Licensed Real Estate Agent — Partnership Realty</p>
                 <p>Single Family Home Specialist</p>
                 <p>Member, Palm Beach Board of Realtors</p>
               </div>

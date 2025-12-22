@@ -231,7 +231,7 @@ export default function PropertyDetail({ property }: Props) {
                     <h3 className="font-serif text-xl text-[var(--foreground)]">
                       Rene Guerra
                     </h3>
-                    <p className="text-[var(--muted)] text-sm">Your Local Realtor</p>
+                    <p className="text-[var(--muted)] text-sm">Partnership Realty</p>
                   </div>
 
                   <div className="space-y-4">

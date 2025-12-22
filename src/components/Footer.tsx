@@ -15,7 +15,7 @@ export default function Footer() {
                 RENE GUERRA
               </span>
               <p className="text-[var(--muted)] text-[10px] tracking-[0.3em] uppercase mt-1">
-                Real Estate
+                Partnership Realty
               </p>
             </div>
             <p className="text-[var(--muted)] text-sm leading-relaxed">

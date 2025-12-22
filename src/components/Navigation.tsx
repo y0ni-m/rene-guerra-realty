@@ -58,7 +58,7 @@ export default function Navigation() {
                   showSolidBg ? "text-[var(--muted)]" : "text-white/70"
                 }`}
               >
-                Realty
+                Partnership Realty
               </span>
             </div>
           </Link>
