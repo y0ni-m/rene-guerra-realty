@@ -11,10 +11,9 @@ import {
 } from "@/data/listings";
 
 const USE_MOCK_DATA = process.env.USE_MOCK_DATA === "true";
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 
-// Use Supabase if configured, otherwise fall back to MLS API or mock data
-const USE_SUPABASE = !!SUPABASE_URL;
+// Use Supabase if configured and client is available
+const USE_SUPABASE = !!supabase;
 
 /**
  * Transform Supabase listing to Property format
@@ -66,7 +65,7 @@ export async function getListings(params: ListingSearchParams = {}): Promise<Pro
   }
 
   // Try Supabase first (fast, cached data)
-  if (USE_SUPABASE) {
+  if (USE_SUPABASE && supabase) {
     try {
       let query = supabase
         .from("listings")
@@ -165,7 +164,7 @@ export async function getListingByIdOrSlug(identifier: string): Promise<Property
   }
 
   // Try Supabase first (instant!)
-  if (USE_SUPABASE) {
+  if (USE_SUPABASE && supabase) {
     try {
       const { data, error } = await supabase
         .from("listings")
@@ -306,7 +305,7 @@ export async function getPrioritizedListings(limit: number = 24): Promise<{
   }
 
   // Try Supabase first (instant, no rate limits!)
-  if (USE_SUPABASE) {
+  if (USE_SUPABASE && supabase) {
     try {
       // Fetch listings ordered with agent first, then brokerage
       const { data, error } = await supabase
@@ -405,7 +404,7 @@ export async function getFeaturedProperty(): Promise<Property> {
   }
 
   // Try Supabase first
-  if (USE_SUPABASE) {
+  if (USE_SUPABASE && supabase) {
     try {
       const { data, error } = await supabase
         .from("listings")

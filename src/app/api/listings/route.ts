@@ -5,7 +5,6 @@ import { sparkClient } from "@/lib/mls/client";
 import { transformResoListing } from "@/lib/mls/transformer";
 import { isApiConfigured } from "@/lib/listings";
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const NO_IMAGE_PLACEHOLDER = "/images/no-image-placeholder.svg";
 
 function dbListingToProperty(listing: Listing) {
@@ -44,7 +43,7 @@ export async function GET(request: NextRequest) {
   const excludeIds = searchParams.get("excludeIds")?.split(",").filter(Boolean) || [];
 
   // Try Supabase first (instant, no rate limits!)
-  if (SUPABASE_URL) {
+  if (supabase) {
     try {
       let query = supabase
         .from("listings")

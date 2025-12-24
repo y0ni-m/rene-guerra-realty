@@ -231,6 +231,15 @@ async function fetchPhotosWithRetry(listingKey: string, maxRetries = 3): Promise
 export async function syncMlsToSupabase(): Promise<SyncResult> {
   console.log("[Sync] Starting MLS sync...");
 
+  if (!supabaseAdmin) {
+    return {
+      success: false,
+      listingsSynced: 0,
+      photosSynced: 0,
+      error: "Supabase not configured",
+    };
+  }
+
   // Create sync log entry
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { data: syncLog, error: logError } = await (supabaseAdmin as any)
@@ -382,6 +391,10 @@ export async function syncMlsToSupabase(): Promise<SyncResult> {
  * Get last sync status
  */
 export async function getLastSyncStatus() {
+  if (!supabaseAdmin) {
+    return null;
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { data } = await (supabaseAdmin as any)
     .from("sync_log")
