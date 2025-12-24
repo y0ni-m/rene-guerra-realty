@@ -54,68 +54,69 @@ export default function PropertyDetail({ property }: Props) {
       </div>
 
       {/* Hero Image */}
-      <section className="relative h-[70vh] min-h-[500px]">
-        <Image
-          src={property.images[activeImage]}
-          alt={property.title}
-          fill
-          className="object-cover"
-          sizes="100vw"
-          priority
-        />
-        <div className="image-overlay" />
+      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
+        <div className="relative aspect-[16/10] md:aspect-[16/9] lg:aspect-[2/1] overflow-hidden bg-[var(--border)]">
+          <Image
+            src={property.images[activeImage]}
+            alt={property.title}
+            fill
+            className="object-contain"
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 100vw, 1280px"
+            priority
+          />
 
-        {/* Image Navigation */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center space-x-4">
-          <button
-            onClick={() => setActiveImage((prev) => (prev === 0 ? property.images.length - 1 : prev - 1))}
-            className="w-12 h-12 bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-white/20 transition-colors"
-          >
-            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <span className="text-white/80 text-sm tracking-wider">
-            {activeImage + 1} / {property.images.length}
-          </span>
-          <button
-            onClick={() => setActiveImage((prev) => (prev === property.images.length - 1 ? 0 : prev + 1))}
-            className="w-12 h-12 bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-white/20 transition-colors"
-          >
-            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+          {/* Image Navigation */}
+          <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex items-center space-x-4">
+            <button
+              onClick={() => setActiveImage((prev) => (prev === 0 ? property.images.length - 1 : prev - 1))}
+              className="w-10 h-10 md:w-12 md:h-12 bg-black/40 backdrop-blur-sm flex items-center justify-center hover:bg-black/60 transition-colors"
+            >
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <span className="text-white text-sm tracking-wider bg-black/40 backdrop-blur-sm px-3 py-1">
+              {activeImage + 1} / {property.images.length}
+            </span>
+            <button
+              onClick={() => setActiveImage((prev) => (prev === property.images.length - 1 ? 0 : prev + 1))}
+              className="w-10 h-10 md:w-12 md:h-12 bg-black/40 backdrop-blur-sm flex items-center justify-center hover:bg-black/60 transition-colors"
+            >
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Status Badge */}
+          <div className="absolute top-4 left-4 md:top-8 md:left-8">
+            <span className="bg-black/40 backdrop-blur-sm text-white text-[10px] tracking-[0.2em] uppercase px-3 py-1">
+              {property.status}
+            </span>
+          </div>
         </div>
 
-        {/* Status Badge */}
-        <div className="absolute top-8 left-8">
-          <span className="text-white/80 text-[10px] tracking-[0.2em] uppercase">
-            {property.status}
-          </span>
+        {/* Thumbnail Strip */}
+        <div className="grid grid-cols-4 md:grid-cols-6 gap-2 mt-4">
+          {property.images.slice(0, 6).map((img, index) => (
+            <button
+              key={index}
+              onClick={() => setActiveImage(index)}
+              className={`relative aspect-[4/3] overflow-hidden ${
+                activeImage === index ? "ring-2 ring-[var(--foreground)]" : ""
+              }`}
+            >
+              <Image
+                src={img}
+                alt={`View ${index + 1}`}
+                fill
+                className="object-cover hover:opacity-80 transition-opacity"
+                sizes="16vw"
+              />
+            </button>
+          ))}
         </div>
       </section>
-
-      {/* Thumbnail Strip */}
-      <div className="grid grid-cols-4 md:grid-cols-6 gap-1">
-        {property.images.slice(0, 6).map((img, index) => (
-          <button
-            key={index}
-            onClick={() => setActiveImage(index)}
-            className={`relative h-20 md:h-24 overflow-hidden ${
-              activeImage === index ? "ring-2 ring-[var(--foreground)]" : ""
-            }`}
-          >
-            <Image
-              src={img}
-              alt={`View ${index + 1}`}
-              fill
-              className="object-cover hover:opacity-80 transition-opacity"
-              sizes="16vw"
-            />
-          </button>
-        ))}
-      </div>
 
       {/* Property Info */}
       <section className="py-16 md:py-24">

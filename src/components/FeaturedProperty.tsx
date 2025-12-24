@@ -2,10 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { featuredProperty } from "@/data/listings";
+import { Property } from "@/data/listings";
 import ScrollAnimation, { StaggerContainer, StaggerItem } from "./ScrollAnimation";
 
-export default function FeaturedProperty() {
+interface Props {
+  property: Property;
+}
+
+export default function FeaturedProperty({ property }: Props) {
+  const featuredProperty = property;
   return (
     <section id="featured" className="py-16 md:py-24 bg-[var(--warm-gray)] dark:bg-[var(--background)]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -24,18 +29,18 @@ export default function FeaturedProperty() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
           {/* Image */}
           <ScrollAnimation direction="left" delay={0.1}>
-            <Link href={`/property/${featuredProperty.slug}`} className="relative h-[500px] lg:h-[600px] group overflow-hidden block">
+            <Link href={`/property/${featuredProperty.slug}`} className="relative aspect-[4/3] lg:aspect-auto lg:h-[600px] group overflow-hidden block bg-[var(--border)]">
               <Image
                 src={featuredProperty.images[0]}
                 alt={featuredProperty.title}
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                className="object-contain md:object-cover transition-transform duration-700 group-hover:scale-105"
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 priority
               />
-              <div className="image-overlay" />
-              <div className="absolute bottom-8 left-8">
-                <span className="text-white/70 text-[10px] tracking-[0.2em] uppercase">
+              <div className="image-overlay hidden md:block" />
+              <div className="absolute bottom-4 left-4 md:bottom-8 md:left-8">
+                <span className="bg-black/40 backdrop-blur-sm text-white text-[10px] tracking-[0.2em] uppercase px-3 py-1">
                   Featured
                 </span>
               </div>
@@ -106,21 +111,21 @@ export default function FeaturedProperty() {
         </div>
 
         {/* Gallery Strip */}
-        <StaggerContainer className="grid grid-cols-3 gap-1 mt-1" staggerDelay={0.1}>
+        <StaggerContainer className="grid grid-cols-3 gap-2 mt-4" staggerDelay={0.1}>
           {featuredProperty.images.slice(1, 4).map((img, index) => (
             <StaggerItem key={index}>
               <Link
                 href={`/property/${featuredProperty.slug}`}
-                className="relative h-32 md:h-48 group overflow-hidden block"
+                className="relative aspect-[4/3] group overflow-hidden block bg-[var(--border)]"
               >
                 <Image
                   src={img}
                   alt={`Gallery ${index + 1}`}
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-contain md:object-cover transition-transform duration-500 group-hover:scale-105"
                   sizes="33vw"
                 />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors hidden md:block" />
               </Link>
             </StaggerItem>
           ))}

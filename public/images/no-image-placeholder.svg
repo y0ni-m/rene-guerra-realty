@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <rect width="400" height="300" fill="#f3f4f6"/>
+  <g fill="#9ca3af">
+    <!-- Camera/Image icon -->
+    <rect x="145" y="100" width="110" height="80" rx="8" stroke="#9ca3af" stroke-width="3" fill="none"/>
+    <circle cx="200" cy="140" r="20" stroke="#9ca3af" stroke-width="3" fill="none"/>
+    <circle cx="230" cy="115" r="6" fill="#9ca3af"/>
+    <!-- Diagonal line through icon -->
+    <line x1="140" y1="180" x2="260" y2="100" stroke="#9ca3af" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <text x="200" y="220" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#6b7280">No Image Available</text>
+</svg>

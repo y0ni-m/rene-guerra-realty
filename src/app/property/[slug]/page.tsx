@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getPropertyBySlug, allProperties } from "@/data/listings";
+import { getListingByIdOrSlug, getAllPropertySlugs } from "@/lib/listings";
 import PropertyDetail from "@/components/PropertyDetail";
 
 interface Props {
@@ -8,14 +8,13 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  return allProperties.map((property) => ({
-    slug: property.slug,
-  }));
+  const slugs = await getAllPropertySlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const property = getPropertyBySlug(slug);
+  const property = await getListingByIdOrSlug(slug);
 
   if (!property) {
     return {
@@ -43,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PropertyPage({ params }: Props) {
   const { slug } = await params;
-  const property = getPropertyBySlug(slug);
+  const property = await getListingByIdOrSlug(slug);
 
   if (!property) {
     notFound();

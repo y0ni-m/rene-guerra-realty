@@ -64,8 +64,8 @@ export default function SearchBar() {
             <option value="">Property Type</option>
             <option value="Single Family">Single Family</option>
             <option value="Condo">Condo</option>
-            <option value="Waterfront">Waterfront</option>
-            <option value="Luxury Estate">Luxury Estate</option>
+            <option value="Townhouse">Townhouse</option>
+            <option value="Villa">Villa</option>
           </select>
         </div>
 

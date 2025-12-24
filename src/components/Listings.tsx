@@ -2,17 +2,72 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useMemo } from "react";
-import { motion, Variants } from "framer-motion";
-import { listings } from "@/data/listings";
+import { useState, useMemo, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Property } from "@/data/listings";
 import { useSearch } from "@/context/SearchContext";
 import ScrollAnimation from "./ScrollAnimation";
 
-const filters = ["All", "Waterfront", "Condo", "Single Family", "Luxury Estate"];
+const filters = ["All", "Waterfront", "Condo", "Single Family", "Townhouse", "Villa"];
+const PAGE_SIZE = 12;
 
-export default function Listings() {
+interface Props {
+  initialListings: Property[];
+  agentListingIds?: string[];
+  brokerageListingIds?: string[];
+  initialHasMore?: boolean;
+}
+
+export default function Listings({
+  initialListings,
+  agentListingIds = [],
+  brokerageListingIds = [],
+  initialHasMore = true,
+}: Props) {
   const [activeFilter, setActiveFilter] = useState("All");
+  const [listings, setListings] = useState(initialListings);
+  const [hasMore, setHasMore] = useState(initialHasMore);
+  const [isLoading, setIsLoading] = useState(false);
+  const [offset, setOffset] = useState(0);
   const { filters: searchFilters, hasActiveFilters, clearFilters } = useSearch();
+
+  // Create sets for quick lookup
+  const agentListings = new Set(agentListingIds);
+  const brokerageListings = new Set(brokerageListingIds);
+
+  // All listing IDs to exclude when loading more (agent + brokerage + already loaded)
+  const excludeIds = useMemo(() => {
+    return [...agentListingIds, ...brokerageListingIds, ...listings.map(l => l.mlsNumber)];
+  }, [agentListingIds, brokerageListingIds, listings]);
+
+  const loadMore = useCallback(async () => {
+    if (isLoading || !hasMore) return;
+
+    setIsLoading(true);
+    try {
+      const newOffset = offset + PAGE_SIZE;
+      const params = new URLSearchParams({
+        offset: newOffset.toString(),
+        limit: PAGE_SIZE.toString(),
+        excludeIds: excludeIds.join(","),
+      });
+
+      const response = await fetch(`/api/listings?${params}`);
+      const data = await response.json();
+
+      if (data.success && data.data.length > 0) {
+        setListings(prev => [...prev, ...data.data]);
+        setOffset(newOffset);
+        setHasMore(data.hasMore);
+      } else {
+        setHasMore(false);
+      }
+    } catch (error) {
+      console.error("Failed to load more listings:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [isLoading, hasMore, offset, excludeIds]);
 
   const filteredListings = useMemo(() => {
     let result = listings;
@@ -47,37 +102,13 @@ export default function Listings() {
     }
 
     return result;
-  }, [searchFilters, activeFilter, hasActiveFilters]);
+  }, [listings, searchFilters, activeFilter, hasActiveFilters]);
 
   const handleFilterClick = (filter: string) => {
     setActiveFilter(filter);
     if (hasActiveFilters) {
       clearFilters();
     }
-  };
-
-  const containerVariants: Variants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const cardVariants: Variants = {
-    hidden: {
-      opacity: 0,
-      y: 30,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: [0.25, 0.46, 0.45, 0.94] as const,
-      },
-    },
   };
 
   return (
@@ -154,30 +185,45 @@ export default function Listings() {
 
         {/* Listings Grid */}
         {filteredListings.length > 0 ? (
-          <motion.div
-            key={activeFilter + searchFilters.query}
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {filteredListings.map((listing) => (
-              <motion.div key={listing.id} variants={cardVariants}>
-                <Link
-                  href={`/property/${listing.slug}`}
-                  className="group block"
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <AnimatePresence>
+              {filteredListings.map((listing, index) => (
+                <motion.div
+                  key={listing.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.5,
+                    delay: (index % PAGE_SIZE) * 0.05,
+                    ease: [0.25, 0.46, 0.45, 0.94],
+                  }}
+                  layout
                 >
+                  <Link
+                    href={`/property/${listing.slug}`}
+                    className="group block"
+                  >
                   {/* Image */}
-                  <div className="relative h-80 mb-6 overflow-hidden">
+                  <div className="relative aspect-[4/3] mb-6 overflow-hidden bg-[var(--border)]">
                     <Image
                       src={listing.images[0]}
                       alt={listing.title}
                       fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="object-contain md:object-cover transition-transform duration-700 group-hover:scale-105"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
-                    <div className="image-overlay" />
-                    <div className="absolute top-6 left-6">
+                    <div className="image-overlay hidden md:block" />
+                    <div className="absolute top-6 left-6 flex flex-col gap-2">
+                      {agentListings.has(listing.mlsNumber) && (
+                        <span className="bg-amber-500 text-white text-[10px] tracking-[0.15em] uppercase px-3 py-1">
+                          Rene&apos;s Listing
+                        </span>
+                      )}
+                      {brokerageListings.has(listing.mlsNumber) && !agentListings.has(listing.mlsNumber) && (
+                        <span className="bg-blue-600 text-white text-[10px] tracking-[0.15em] uppercase px-3 py-1">
+                          Partnership Realty
+                        </span>
+                      )}
                       <span className="text-white/80 text-[10px] tracking-[0.2em] uppercase">
                         {listing.type}
                       </span>
@@ -205,10 +251,11 @@ export default function Listings() {
                       <span>{listing.sqft} Sq Ft</span>
                     </div>
                   </div>
-                </Link>
-              </motion.div>
-            ))}
-          </motion.div>
+                  </Link>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
         ) : (
           <motion.div
             initial={{ opacity: 0 }}
@@ -227,11 +274,25 @@ export default function Listings() {
           </motion.div>
         )}
 
-        {/* View All */}
-        {!hasActiveFilters && filteredListings.length > 0 && (
+        {/* Load More */}
+        {!hasActiveFilters && filteredListings.length > 0 && hasMore && (
           <ScrollAnimation delay={0.3} className="text-center mt-16">
-            <button className="btn-outline px-10 py-4">
-              View All Properties
+            <button
+              onClick={loadMore}
+              disabled={isLoading}
+              className="btn-outline px-10 py-4 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                  Loading...
+                </span>
+              ) : (
+                "Load More Properties"
+              )}
             </button>
           </ScrollAnimation>
         )}
