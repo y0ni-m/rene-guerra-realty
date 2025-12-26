@@ -54,6 +54,28 @@ export interface Database {
         Insert: Omit<Database["public"]["Tables"]["sync_log"]["Row"], "id" | "started_at" | "completed_at" | "error_message">;
         Update: Partial<Database["public"]["Tables"]["sync_log"]["Row"]>;
       };
+      translations: {
+        Row: {
+          id: number;
+          source_text: string;
+          source_lang: string;
+          target_lang: string;
+          translated_text: string;
+          created_at: string;
+        };
+        Insert: {
+          source_text: string;
+          source_lang: string;
+          target_lang: string;
+          translated_text: string;
+        };
+        Update: {
+          source_text?: string;
+          source_lang?: string;
+          target_lang?: string;
+          translated_text?: string;
+        };
+      };
     };
   };
 }

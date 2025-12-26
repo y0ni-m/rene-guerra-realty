@@ -23,6 +23,8 @@ export interface Property {
   virtualTour?: string;
   mlsNumber: string;
   listedDate: string;
+  isAgentListing?: boolean;
+  isBrokerageListing?: boolean;
 }
 
 export const featuredProperty: Property = {

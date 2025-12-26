@@ -1,9 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import SearchBar from "./SearchBar";
 
 export default function Hero() {
+  const t = useTranslations("hero");
+
   return (
     <section className="relative h-screen min-h-[800px] flex items-center justify-center">
       {/* Background Image */}
@@ -25,7 +28,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-white/70 text-[11px] tracking-[0.4em] uppercase mb-6"
         >
-          South Florida Real Estate
+          {t("overline")}
         </motion.p>
 
         <motion.h1
@@ -34,9 +37,9 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="font-serif text-4xl md:text-6xl lg:text-7xl text-white mb-8 leading-[1.1]"
         >
-          Find Your Perfect
+          {t("title")}
           <br />
-          <span className="italic">Family Home</span>
+          <span className="italic">{t("titleAccent")}</span>
         </motion.h1>
 
         <motion.p
@@ -45,7 +48,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="text-white/80 text-lg md:text-xl mb-16 max-w-2xl mx-auto leading-relaxed font-light"
         >
-          Single family homes and residential properties throughout Palm Beach County
+          {t("subtitle")}
         </motion.p>
 
         {/* Search Bar */}
@@ -66,7 +69,7 @@ export default function Hero() {
         >
           <div className="flex flex-col items-center space-y-3">
             <span className="text-white/50 text-[10px] tracking-[0.3em] uppercase">
-              Scroll
+              {t("scroll")}
             </span>
             <div className="w-[1px] h-12 bg-white/30 relative overflow-hidden">
               <motion.div

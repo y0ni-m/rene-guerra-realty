@@ -4,11 +4,15 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "@/context/ThemeContext";
+import { useLanguage } from "@/context/LanguageContext";
+import { useTranslations } from "next-intl";
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const { locale, toggleLocale } = useLanguage();
+  const t = useTranslations("nav");
   const pathname = usePathname();
 
   // Check if we're on a page without a hero image (like property detail pages)
@@ -23,10 +27,10 @@ export default function Navigation() {
   }, []);
 
   const navLinks = [
-    { href: "#listings", label: "Properties" },
-    { href: "#featured", label: "Featured" },
-    { href: "#about", label: "About" },
-    { href: "#contact", label: "Contact" },
+    { href: "#listings", label: t("properties") },
+    { href: "#featured", label: t("featured") },
+    { href: "#about", label: t("about") },
+    { href: "#contact", label: t("contact") },
   ];
 
   // On detail pages, always show solid background
@@ -98,18 +102,29 @@ export default function Navigation() {
               )}
             </button>
 
+            {/* Language Toggle */}
+            <button
+              onClick={toggleLocale}
+              className={`p-2 text-[11px] tracking-[0.1em] font-medium transition-colors ${
+                showSolidBg ? "text-[var(--foreground)]" : "text-white"
+              }`}
+              aria-label="Toggle language"
+            >
+              {locale === "en" ? "ES" : "EN"}
+            </button>
+
             <Link
               href={isDetailPage ? "/#contact" : "#contact"}
               className={`btn-primary px-6 py-3 ${
                 showSolidBg ? "" : "!bg-white !text-black"
               }`}
             >
-              Inquire
+              {t("inquire")}
             </Link>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center space-x-4">
+          <div className="md:hidden flex items-center space-x-2">
             <button
               onClick={toggleTheme}
               className={`p-2 transition-colors ${
@@ -126,6 +141,15 @@ export default function Navigation() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
               )}
+            </button>
+            <button
+              onClick={toggleLocale}
+              className={`p-2 text-[11px] tracking-[0.1em] font-medium transition-colors ${
+                showSolidBg ? "text-[var(--foreground)]" : "text-white"
+              }`}
+              aria-label="Toggle language"
+            >
+              {locale === "en" ? "ES" : "EN"}
             </button>
             <button
               className="p-2"
@@ -177,7 +201,7 @@ export default function Navigation() {
               className="btn-primary px-6 py-3 text-center"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Inquire
+              {t("inquire")}
             </Link>
           </div>
         </div>

@@ -289,7 +289,7 @@ export async function getBrokerageListings(): Promise<Property[]> {
 }
 
 /**
- * Gets prioritized listings: Agent first, then brokerage, then general MLS
+ * Gets prioritized listings: Agent first, then brokerage (Supabase only)
  */
 export async function getPrioritizedListings(limit: number = 24): Promise<{
   agentListings: Property[];
@@ -300,18 +300,19 @@ export async function getPrioritizedListings(limit: number = 24): Promise<{
     return {
       agentListings: mockListings.slice(0, 2),
       brokerageListings: mockListings.slice(2, 4),
-      mlsListings: mockListings.slice(4),
+      mlsListings: [],
     };
   }
 
-  // Try Supabase first (instant, no rate limits!)
+  // Only use Supabase - no MLS API fallback
   if (USE_SUPABASE && supabase) {
     try {
-      // Fetch listings ordered with agent first, then brokerage
+      // Fetch only agent and brokerage listings
       const { data, error } = await supabase
         .from("listings")
         .select("*")
         .eq("status", "For Sale")
+        .or("is_agent_listing.eq.true,is_brokerage_listing.eq.true")
         .order("is_agent_listing", { ascending: false })
         .order("is_brokerage_listing", { ascending: false })
         .order("listed_date", { ascending: false })
@@ -325,74 +326,26 @@ export async function getPrioritizedListings(limit: number = 24): Promise<{
           .filter(l => l.is_agent_listing)
           .map(dbListingToProperty);
 
-        // Fill remaining slots with brokerage listings
-        const remainingSlots = limit - agentListings.length;
         const brokerageListings = listings
           .filter(l => l.is_brokerage_listing && !l.is_agent_listing)
-          .slice(0, remainingSlots)
           .map(dbListingToProperty);
 
-        // No more general MLS listings (we only have agent + brokerage now)
-        const mlsListings: Property[] = [];
+        console.log(`[Listings] Loaded from Supabase: ${agentListings.length} agent, ${brokerageListings.length} brokerage`);
 
-        console.log(`[Listings] Loaded from Supabase: ${agentListings.length} agent, ${brokerageListings.length} brokerage, ${mlsListings.length} MLS`);
-
-        return { agentListings, brokerageListings, mlsListings };
+        return { agentListings, brokerageListings, mlsListings: [] };
       }
     } catch (error) {
       console.error("[Listings] Supabase fetch failed:", error);
     }
   }
 
-  // Fallback to MLS API (slow, rate limited)
-  try {
-    const [agentRaw, brokerageRaw, mlsResponse] = await Promise.all([
-      getAgentListingsRaw(),
-      getBrokerageListingsRaw(),
-      sparkClient.getListings({ limit: limit + 10 }),
-    ]);
-
-    const excludeIds = new Set([
-      ...agentRaw.map(l => l.ListingId),
-      ...brokerageRaw.map(l => l.ListingId),
-    ]);
-
-    const filteredMlsRaw = (mlsResponse.value || []).filter(
-      l => !excludeIds.has(l.ListingId)
-    ).slice(0, limit);
-
-    const allListingKeys = [
-      ...agentRaw.map(l => l.ListingKey),
-      ...brokerageRaw.map(l => l.ListingKey),
-      ...filteredMlsRaw.map(l => l.ListingKey),
-    ];
-
-    const photoMap = await sparkClient.getPhotosForListings(allListingKeys);
-
-    const agentListings = agentRaw.map((listing, index) => {
-      const photos = photoMap.get(listing.ListingKey) || [];
-      return transformResoListing(listing, index, photos);
-    });
-
-    const brokerageListings = brokerageRaw.map((listing, index) => {
-      const photos = photoMap.get(listing.ListingKey) || [];
-      return transformResoListing(listing, index, photos);
-    });
-
-    const mlsListings = filteredMlsRaw.map((listing, index) => {
-      const photos = photoMap.get(listing.ListingKey) || [];
-      return transformResoListing(listing, index, photos);
-    });
-
-    return { agentListings, brokerageListings, mlsListings };
-  } catch (error) {
-    console.error("[Listings] MLS API failed:", error);
-    return {
-      agentListings: [],
-      brokerageListings: [],
-      mlsListings: applyFiltersToMock(mockListings, {}),
-    };
-  }
+  // No MLS API fallback - return empty if Supabase fails
+  console.log("[Listings] Supabase not available, returning empty");
+  return {
+    agentListings: [],
+    brokerageListings: [],
+    mlsListings: [],
+  };
 }
 
 /**

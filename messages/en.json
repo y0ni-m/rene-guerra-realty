@@ -1,0 +1,127 @@
+{
+  "nav": {
+    "properties": "Properties",
+    "featured": "Featured",
+    "about": "About",
+    "contact": "Contact",
+    "inquire": "Inquire"
+  },
+  "hero": {
+    "overline": "South Florida Real Estate",
+    "title": "Find Your Perfect",
+    "titleAccent": "Family Home",
+    "subtitle": "Single family homes and residential properties throughout Palm Beach County",
+    "scroll": "Scroll"
+  },
+  "search": {
+    "placeholder": "Search by city, ZIP, or neighborhood...",
+    "search": "Search"
+  },
+  "featured": {
+    "overline": "Featured Listing",
+    "title": "Featured Home",
+    "viewProperty": "View Property",
+    "scheduleTour": "Schedule Tour"
+  },
+  "listings": {
+    "overline": "Our Portfolio",
+    "title": "Available Properties",
+    "noResults": "No properties match your current filters.",
+    "adjustFilters": "Try adjusting your search criteria.",
+    "loadMore": "Load More Properties",
+    "loading": "Loading...",
+    "filters": {
+      "allCities": "All Cities",
+      "allTypes": "All Types",
+      "anyPrice": "Any Price",
+      "singleFamily": "Single Family",
+      "condo": "Condo",
+      "townhouse": "Townhouse",
+      "villa": "Villa",
+      "clearAll": "Clear All"
+    }
+  },
+  "property": {
+    "beds": "Beds",
+    "baths": "Baths",
+    "sqft": "Sq Ft",
+    "back": "All Properties",
+    "overview": "Overview",
+    "features": "Features",
+    "details": "Property Details",
+    "mlsNumber": "MLS Number",
+    "propertyType": "Property Type",
+    "yearBuilt": "Year Built",
+    "lotSize": "Lot Size",
+    "parking": "Parking",
+    "status": "Status",
+    "listedDate": "Listed Date",
+    "scheduleViewing": "Private Showing",
+    "tourDescription": "Experience this property in person with a private tour.",
+    "scheduleTour": "Schedule Tour",
+    "save": "Save",
+    "share": "Share",
+    "formName": "Name",
+    "formEmail": "Email",
+    "formPhone": "Phone",
+    "formMessage": "Message",
+    "formSubmit": "Send",
+    "formSuccess": "Thank you! We'll be in touch shortly to schedule your viewing."
+  },
+  "contact": {
+    "overline": "Contact",
+    "title": "Get in Touch",
+    "description": "Whether you're seeking your next residence or considering a sale, I welcome the opportunity to discuss your real estate objectives.",
+    "telephone": "Telephone",
+    "email": "Email",
+    "location": "Location",
+    "locationValue": "Palm Beach County, Florida",
+    "hours": "Hours",
+    "hoursWeekday": "Monday – Friday: 9am – 6pm",
+    "hoursSaturday": "Saturday: 10am – 4pm",
+    "hoursSunday": "Sunday: By Appointment",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "Message",
+      "interest": "Interest",
+      "buying": "Buying a Property",
+      "selling": "Selling a Property",
+      "renting": "Renting",
+      "investment": "Investment Opportunities",
+      "other": "Other Inquiry",
+      "submit": "Send Message",
+      "success": "Thank you for your inquiry. Rene will be in touch shortly."
+    }
+  },
+  "footer": {
+    "tagline": "Helping families find their perfect home throughout Palm Beach County and South Florida.",
+    "navigation": "Navigation",
+    "services": "Services",
+    "buyerRep": "Buyer Representation",
+    "sellerRep": "Seller Representation",
+    "marketAnalysis": "Market Analysis",
+    "investmentAdvisory": "Investment Advisory",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "mlsLicensed": "MLS Licensed",
+    "copyright": "Rene Guerra Real Estate"
+  },
+  "common": {
+    "forSale": "For Sale",
+    "pending": "Pending",
+    "sold": "Sold"
+  },
+  "about": {
+    "overline": "About",
+    "bio1": "With five years of dedicated experience in South Florida's real estate market, Rene Guerra has developed a deep understanding of what families need when finding their perfect home.",
+    "bio2": "Specializing in single family homes throughout Palm Beach County, Rene brings a personal approach to every transaction—combining local market expertise with a genuine commitment to helping clients find the right home for their lifestyle and budget.",
+    "salesVolume": "Sales Volume",
+    "familiesHelped": "Families Helped",
+    "yearsExperience": "Years Experience",
+    "credential1": "Licensed Real Estate Agent — Partnership Realty",
+    "credential2": "Single Family Home Specialist",
+    "credential3": "Member, Palm Beach Board of Realtors"
+  }
+}

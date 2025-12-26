@@ -4,6 +4,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { SearchProvider } from "@/context/SearchContext";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 export const metadata: Metadata = {
   title: {
@@ -76,11 +77,13 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body className="antialiased bg-[var(--background)] text-[var(--foreground)]">
         <ThemeProvider>
-          <SearchProvider>
-            <Navigation />
-            <main>{children}</main>
-            <Footer />
-          </SearchProvider>
+          <LanguageProvider>
+            <SearchProvider>
+              <Navigation />
+              <main>{children}</main>
+              <Footer />
+            </SearchProvider>
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

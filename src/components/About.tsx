@@ -1,10 +1,13 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import reneHeadshot from "@/media/rene-headshot.jpg";
 import ScrollAnimation, { StaggerContainer, StaggerItem } from "./ScrollAnimation";
 
 export default function About() {
+  const t = useTranslations("about");
+
   return (
     <section id="about" className="py-16 md:py-24 bg-[var(--background)]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -31,7 +34,7 @@ export default function About() {
           <ScrollAnimation direction="right" delay={0.2}>
             <div>
               <p className="text-[var(--muted)] text-[11px] tracking-[0.3em] uppercase mb-4">
-                About
+                {t("overline")}
               </p>
               <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-[var(--foreground)] mb-6">
                 Rene Guerra
@@ -39,16 +42,11 @@ export default function About() {
               <div className="section-divider mb-8" />
 
               <p className="text-[var(--muted)] leading-relaxed mb-6">
-                With five years of dedicated experience in South Florida&apos;s
-                real estate market, Rene Guerra has developed a deep understanding
-                of what families need when finding their perfect home.
+                {t("bio1")}
               </p>
 
               <p className="text-[var(--muted)] leading-relaxed mb-8">
-                Specializing in single family homes throughout Palm Beach County,
-                Rene brings a personal approach to every transaction—combining
-                local market expertise with a genuine commitment to helping
-                clients find the right home for their lifestyle and budget.
+                {t("bio2")}
               </p>
 
               {/* Stats */}
@@ -56,28 +54,28 @@ export default function About() {
                 <StaggerItem>
                   <div>
                     <p className="font-serif text-3xl text-[var(--foreground)]">$2M+</p>
-                    <p className="text-[var(--muted)] text-sm mt-1">Sales Volume</p>
+                    <p className="text-[var(--muted)] text-sm mt-1">{t("salesVolume")}</p>
                   </div>
                 </StaggerItem>
                 <StaggerItem>
                   <div>
                     <p className="font-serif text-3xl text-[var(--foreground)]">20+</p>
-                    <p className="text-[var(--muted)] text-sm mt-1">Families Helped</p>
+                    <p className="text-[var(--muted)] text-sm mt-1">{t("familiesHelped")}</p>
                   </div>
                 </StaggerItem>
                 <StaggerItem>
                   <div>
                     <p className="font-serif text-3xl text-[var(--foreground)]">5</p>
-                    <p className="text-[var(--muted)] text-sm mt-1">Years Experience</p>
+                    <p className="text-[var(--muted)] text-sm mt-1">{t("yearsExperience")}</p>
                   </div>
                 </StaggerItem>
               </StaggerContainer>
 
               {/* Credentials */}
               <div className="space-y-3 text-[var(--muted)] text-sm">
-                <p>Licensed Real Estate Agent — Partnership Realty</p>
-                <p>Single Family Home Specialist</p>
-                <p>Member, Palm Beach Board of Realtors</p>
+                <p>{t("credential1")}</p>
+                <p>{t("credential2")}</p>
+                <p>{t("credential3")}</p>
               </div>
             </div>
           </ScrollAnimation>

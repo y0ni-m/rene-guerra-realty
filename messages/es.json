@@ -1,0 +1,127 @@
+{
+  "nav": {
+    "properties": "Propiedades",
+    "featured": "Destacado",
+    "about": "Nosotros",
+    "contact": "Contacto",
+    "inquire": "Consultar"
+  },
+  "hero": {
+    "overline": "Bienes Raíces en el Sur de Florida",
+    "title": "Encuentre Su",
+    "titleAccent": "Hogar Ideal",
+    "subtitle": "Casas unifamiliares y propiedades residenciales en todo el Condado de Palm Beach",
+    "scroll": "Desplazar"
+  },
+  "search": {
+    "placeholder": "Buscar por ciudad, código postal o vecindario...",
+    "search": "Buscar"
+  },
+  "featured": {
+    "overline": "Propiedad Destacada",
+    "title": "Casa Destacada",
+    "viewProperty": "Ver Propiedad",
+    "scheduleTour": "Agendar Visita"
+  },
+  "listings": {
+    "overline": "Nuestro Portafolio",
+    "title": "Propiedades Disponibles",
+    "noResults": "No hay propiedades que coincidan con sus filtros.",
+    "adjustFilters": "Intente ajustar sus criterios de búsqueda.",
+    "loadMore": "Cargar Más Propiedades",
+    "loading": "Cargando...",
+    "filters": {
+      "allCities": "Todas las Ciudades",
+      "allTypes": "Todos los Tipos",
+      "anyPrice": "Cualquier Precio",
+      "singleFamily": "Casa Unifamiliar",
+      "condo": "Condominio",
+      "townhouse": "Casa Adosada",
+      "villa": "Villa",
+      "clearAll": "Limpiar Todo"
+    }
+  },
+  "property": {
+    "beds": "Hab.",
+    "baths": "Baños",
+    "sqft": "Pies²",
+    "back": "Todas las Propiedades",
+    "overview": "Descripción",
+    "features": "Características",
+    "details": "Detalles de la Propiedad",
+    "mlsNumber": "Número MLS",
+    "propertyType": "Tipo de Propiedad",
+    "yearBuilt": "Año de Construcción",
+    "lotSize": "Tamaño del Lote",
+    "parking": "Estacionamiento",
+    "status": "Estado",
+    "listedDate": "Fecha de Publicación",
+    "scheduleViewing": "Visita Privada",
+    "tourDescription": "Experimente esta propiedad en persona con un recorrido privado.",
+    "scheduleTour": "Agendar Visita",
+    "save": "Guardar",
+    "share": "Compartir",
+    "formName": "Nombre",
+    "formEmail": "Correo Electrónico",
+    "formPhone": "Teléfono",
+    "formMessage": "Mensaje",
+    "formSubmit": "Enviar",
+    "formSuccess": "¡Gracias! Nos pondremos en contacto pronto para agendar su visita."
+  },
+  "contact": {
+    "overline": "Contacto",
+    "title": "Contáctenos",
+    "description": "Ya sea que esté buscando su próxima residencia o considerando una venta, será un placer discutir sus objetivos inmobiliarios.",
+    "telephone": "Teléfono",
+    "email": "Correo Electrónico",
+    "location": "Ubicación",
+    "locationValue": "Condado de Palm Beach, Florida",
+    "hours": "Horario",
+    "hoursWeekday": "Lunes – Viernes: 9am – 6pm",
+    "hoursSaturday": "Sábado: 10am – 4pm",
+    "hoursSunday": "Domingo: Con Cita",
+    "form": {
+      "name": "Nombre",
+      "email": "Correo Electrónico",
+      "phone": "Teléfono",
+      "message": "Mensaje",
+      "interest": "Interés",
+      "buying": "Comprar una Propiedad",
+      "selling": "Vender una Propiedad",
+      "renting": "Alquilar",
+      "investment": "Oportunidades de Inversión",
+      "other": "Otra Consulta",
+      "submit": "Enviar Mensaje",
+      "success": "Gracias por su consulta. Rene se pondrá en contacto pronto."
+    }
+  },
+  "footer": {
+    "tagline": "Ayudando a familias a encontrar su hogar perfecto en el Condado de Palm Beach y el Sur de Florida.",
+    "navigation": "Navegación",
+    "services": "Servicios",
+    "buyerRep": "Representación de Compradores",
+    "sellerRep": "Representación de Vendedores",
+    "marketAnalysis": "Análisis de Mercado",
+    "investmentAdvisory": "Asesoría de Inversiones",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "mlsLicensed": "Licencia MLS",
+    "copyright": "Rene Guerra Bienes Raíces"
+  },
+  "common": {
+    "forSale": "En Venta",
+    "pending": "Pendiente",
+    "sold": "Vendido"
+  },
+  "about": {
+    "overline": "Nosotros",
+    "bio1": "Con cinco años de experiencia dedicada en el mercado inmobiliario del Sur de Florida, Rene Guerra ha desarrollado una profunda comprensión de lo que las familias necesitan al buscar su hogar perfecto.",
+    "bio2": "Especializado en casas unifamiliares en todo el Condado de Palm Beach, Rene aporta un enfoque personal a cada transacción, combinando experiencia en el mercado local con un compromiso genuino de ayudar a los clientes a encontrar el hogar adecuado para su estilo de vida y presupuesto.",
+    "salesVolume": "Volumen de Ventas",
+    "familiesHelped": "Familias Ayudadas",
+    "yearsExperience": "Años de Experiencia",
+    "credential1": "Agente de Bienes Raíces Licenciado — Partnership Realty",
+    "credential2": "Especialista en Casas Unifamiliares",
+    "credential3": "Miembro, Junta de Agentes de Palm Beach"
+  }
+}

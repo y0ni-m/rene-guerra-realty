@@ -1,9 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { useSearch } from "@/context/SearchContext";
 
 export default function SearchBar() {
+  const t = useTranslations("search");
+  const tList = useTranslations("listings.filters");
   const { setFilters } = useSearch();
   const [searchQuery, setSearchQuery] = useState("");
   const [propertyType, setPropertyType] = useState("");
@@ -47,7 +50,7 @@ export default function SearchBar() {
         <div className="flex-1 border-b md:border-b-0 md:border-r border-gray-200">
           <input
             type="text"
-            placeholder="Location"
+            placeholder={t("placeholder")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full px-6 py-4 bg-transparent text-gray-900 placeholder-gray-400 text-sm tracking-wide focus:outline-none"
@@ -61,11 +64,11 @@ export default function SearchBar() {
             onChange={(e) => setPropertyType(e.target.value)}
             className="w-full px-6 py-4 bg-transparent text-gray-900 text-sm tracking-wide focus:outline-none appearance-none cursor-pointer"
           >
-            <option value="">Property Type</option>
-            <option value="Single Family">Single Family</option>
-            <option value="Condo">Condo</option>
-            <option value="Townhouse">Townhouse</option>
-            <option value="Villa">Villa</option>
+            <option value="">{tList("allTypes")}</option>
+            <option value="Single Family">{tList("singleFamily")}</option>
+            <option value="Condo">{tList("condo")}</option>
+            <option value="Townhouse">{tList("townhouse")}</option>
+            <option value="Villa">{tList("villa")}</option>
           </select>
         </div>
 
@@ -76,7 +79,7 @@ export default function SearchBar() {
             onChange={(e) => setPriceRange(e.target.value)}
             className="w-full px-6 py-4 bg-transparent text-gray-900 text-sm tracking-wide focus:outline-none appearance-none cursor-pointer"
           >
-            <option value="">Price Range</option>
+            <option value="">{tList("anyPrice")}</option>
             <option value="0-500000">Under $500K</option>
             <option value="500000-1000000">$500K - $1M</option>
             <option value="1000000-2000000">$1M - $2M</option>
@@ -90,7 +93,7 @@ export default function SearchBar() {
           type="submit"
           className="px-8 py-4 bg-[#1A1A1A] text-white text-[11px] tracking-[0.2em] uppercase hover:bg-black transition-colors"
         >
-          Search
+          {t("search")}
         </button>
       </div>
 

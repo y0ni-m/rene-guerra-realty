@@ -2,7 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Property } from "@/data/listings";
+import { usePropertyTranslation } from "@/hooks/usePropertyTranslation";
 import ScrollAnimation, { StaggerContainer, StaggerItem } from "./ScrollAnimation";
 
 interface Props {
@@ -10,17 +12,20 @@ interface Props {
 }
 
 export default function FeaturedProperty({ property }: Props) {
-  const featuredProperty = property;
+  const t = useTranslations("featured");
+  const tProp = useTranslations("property");
+  const { translatedProperty } = usePropertyTranslation(property);
+  const featuredProperty = translatedProperty || property;
   return (
     <section id="featured" className="py-16 md:py-24 bg-[var(--warm-gray)] dark:bg-[var(--background)]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Section Header */}
         <ScrollAnimation className="text-center mb-16">
           <p className="text-[var(--muted)] text-[11px] tracking-[0.3em] uppercase mb-4">
-            Featured Listing
+            {t("overline")}
           </p>
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-[var(--foreground)]">
-            Featured Home
+            {t("title")}
           </h2>
           <div className="section-divider mx-auto mt-6" />
         </ScrollAnimation>
@@ -66,15 +71,15 @@ export default function FeaturedProperty({ property }: Props) {
               <div className="flex space-x-8 mb-8 pb-8 border-b border-[var(--border)]">
                 <div>
                   <span className="text-[var(--foreground)] text-xl">{featuredProperty.beds}</span>
-                  <span className="text-[var(--muted)] text-sm ml-2">Beds</span>
+                  <span className="text-[var(--muted)] text-sm ml-2">{tProp("beds")}</span>
                 </div>
                 <div>
                   <span className="text-[var(--foreground)] text-xl">{featuredProperty.baths}</span>
-                  <span className="text-[var(--muted)] text-sm ml-2">Baths</span>
+                  <span className="text-[var(--muted)] text-sm ml-2">{tProp("baths")}</span>
                 </div>
                 <div>
                   <span className="text-[var(--foreground)] text-xl">{featuredProperty.sqft}</span>
-                  <span className="text-[var(--muted)] text-sm ml-2">Sq Ft</span>
+                  <span className="text-[var(--muted)] text-sm ml-2">{tProp("sqft")}</span>
                 </div>
               </div>
 
@@ -100,10 +105,10 @@ export default function FeaturedProperty({ property }: Props) {
                   href={`/property/${featuredProperty.slug}`}
                   className="btn-primary px-8 py-4 text-center"
                 >
-                  View Property
+                  {t("viewProperty")}
                 </Link>
                 <button className="btn-outline px-8 py-4">
-                  Schedule Tour
+                  {t("scheduleTour")}
                 </button>
               </div>
             </div>

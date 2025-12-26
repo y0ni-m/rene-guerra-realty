@@ -4,8 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { Property } from "@/data/listings";
 import { useSearch } from "@/context/SearchContext";
+import { useLanguage } from "@/context/LanguageContext";
+import { translatePropertyType } from "@/lib/translation/propertyTypes";
 import ScrollAnimation from "./ScrollAnimation";
 
 const filters = ["All", "Waterfront", "Condo", "Single Family", "Townhouse", "Villa"];
@@ -24,6 +27,9 @@ export default function Listings({
   brokerageListingIds = [],
   initialHasMore = true,
 }: Props) {
+  const t = useTranslations("listings");
+  const tProp = useTranslations("property");
+  const { locale } = useLanguage();
   const [activeFilter, setActiveFilter] = useState("All");
   const [listings, setListings] = useState(initialListings);
   const [hasMore, setHasMore] = useState(initialHasMore);
@@ -117,10 +123,10 @@ export default function Listings({
         {/* Section Header */}
         <ScrollAnimation className="text-center mb-16">
           <p className="text-[var(--muted)] text-[11px] tracking-[0.3em] uppercase mb-4">
-            Explore
+            {t("overline")}
           </p>
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-[var(--foreground)]">
-            {hasActiveFilters ? "Search Results" : "Properties"}
+            {t("title")}
           </h2>
           <div className="section-divider mx-auto mt-6" />
 
@@ -151,7 +157,7 @@ export default function Listings({
                 onClick={clearFilters}
                 className="px-4 py-2 border border-[var(--border)] text-[var(--muted)] text-[11px] tracking-wider hover:border-[var(--foreground)] hover:text-[var(--foreground)] transition-colors"
               >
-                Clear All
+                {t("filters.clearAll")}
               </button>
             </div>
           )}
@@ -214,18 +220,19 @@ export default function Listings({
                     />
                     <div className="image-overlay hidden md:block" />
                     <div className="absolute top-6 left-6 flex flex-col gap-2">
-                      {agentListings.has(listing.mlsNumber) && (
+                      {(agentListings.has(listing.mlsNumber) || listing.isAgentListing) && (
                         <span className="bg-amber-500 text-white text-[10px] tracking-[0.15em] uppercase px-3 py-1">
                           Rene&apos;s Listing
                         </span>
                       )}
-                      {brokerageListings.has(listing.mlsNumber) && !agentListings.has(listing.mlsNumber) && (
+                      {(brokerageListings.has(listing.mlsNumber) || listing.isBrokerageListing) &&
+                       !(agentListings.has(listing.mlsNumber) || listing.isAgentListing) && (
                         <span className="bg-blue-600 text-white text-[10px] tracking-[0.15em] uppercase px-3 py-1">
                           Partnership Realty
                         </span>
                       )}
                       <span className="text-white/80 text-[10px] tracking-[0.2em] uppercase">
-                        {listing.type}
+                        {translatePropertyType(listing.type, locale)}
                       </span>
                     </div>
                   </div>
@@ -244,11 +251,11 @@ export default function Listings({
 
                     {/* Details */}
                     <div className="flex items-center space-x-4 text-[var(--muted)] text-sm">
-                      <span>{listing.beds} Beds</span>
+                      <span>{listing.beds} {tProp("beds")}</span>
                       <span className="w-1 h-1 bg-[var(--muted)] rounded-full" />
-                      <span>{listing.baths} Baths</span>
+                      <span>{listing.baths} {tProp("baths")}</span>
                       <span className="w-1 h-1 bg-[var(--muted)] rounded-full" />
-                      <span>{listing.sqft} Sq Ft</span>
+                      <span>{listing.sqft} {tProp("sqft")}</span>
                     </div>
                   </div>
                   </Link>
@@ -263,13 +270,13 @@ export default function Listings({
             className="text-center py-20"
           >
             <p className="text-[var(--muted)] text-lg mb-6">
-              No properties match your criteria
+              {t("noResults")}
             </p>
             <button
               onClick={clearFilters}
               className="btn-primary px-8 py-4"
             >
-              Clear Filters
+              {t("filters.clearAll")}
             </button>
           </motion.div>
         )}
@@ -288,10 +295,10 @@ export default function Listings({
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>
-                  Loading...
+                  {t("loading")}
                 </span>
               ) : (
-                "Load More Properties"
+                t("loadMore")
               )}
             </button>
           </ScrollAnimation>

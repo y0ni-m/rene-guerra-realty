@@ -1,6 +1,11 @@
+"use client";
+
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export default function Footer() {
+  const t = useTranslations("footer");
+  const tNav = useTranslations("nav");
   const currentYear = new Date().getFullYear();
 
   return (
@@ -19,22 +24,21 @@ export default function Footer() {
               </p>
             </div>
             <p className="text-[var(--muted)] text-sm leading-relaxed">
-              Helping families find their perfect home throughout
-              Palm Beach County and South Florida.
+              {t("tagline")}
             </p>
           </div>
 
           {/* Navigation */}
           <div>
             <p className="text-[var(--foreground)] text-[11px] tracking-[0.2em] uppercase mb-6">
-              Navigation
+              {t("navigation")}
             </p>
             <ul className="space-y-4">
               {[
-                { href: "#listings", label: "Properties" },
-                { href: "#featured", label: "Featured" },
-                { href: "#about", label: "About" },
-                { href: "#contact", label: "Contact" },
+                { href: "#listings", label: tNav("properties") },
+                { href: "#featured", label: tNav("featured") },
+                { href: "#about", label: tNav("about") },
+                { href: "#contact", label: tNav("contact") },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
@@ -51,20 +55,20 @@ export default function Footer() {
           {/* Services */}
           <div>
             <p className="text-[var(--foreground)] text-[11px] tracking-[0.2em] uppercase mb-6">
-              Services
+              {t("services")}
             </p>
             <ul className="space-y-4 text-[var(--muted)] text-sm">
-              <li>Buyer Representation</li>
-              <li>Seller Representation</li>
-              <li>Market Analysis</li>
-              <li>Investment Advisory</li>
+              <li>{t("buyerRep")}</li>
+              <li>{t("sellerRep")}</li>
+              <li>{t("marketAnalysis")}</li>
+              <li>{t("investmentAdvisory")}</li>
             </ul>
           </div>
 
           {/* Contact */}
           <div>
             <p className="text-[var(--foreground)] text-[11px] tracking-[0.2em] uppercase mb-6">
-              Contact
+              {tNav("contact")}
             </p>
             <ul className="space-y-4 text-[var(--muted)] text-sm">
               <li>Palm Beach County, Florida</li>
@@ -98,16 +102,16 @@ export default function Footer() {
         {/* Bottom */}
         <div className="py-8 border-t border-[var(--border)] flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-[var(--muted)] text-[11px] tracking-wider">
-            &copy; {currentYear} Rene Guerra Real Estate
+            &copy; {currentYear} {t("copyright")}
           </p>
           <div className="flex space-x-8 text-[var(--muted)] text-[11px] tracking-wider">
             <Link href="#" className="hover:text-[var(--foreground)] transition-colors">
-              Privacy
+              {t("privacy")}
             </Link>
             <Link href="#" className="hover:text-[var(--foreground)] transition-colors">
-              Terms
+              {t("terms")}
             </Link>
-            <span>MLS Licensed</span>
+            <span>{t("mlsLicensed")}</span>
           </div>
         </div>
       </div>

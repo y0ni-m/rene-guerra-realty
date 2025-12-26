@@ -3,7 +3,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Property } from "@/data/listings";
+import { usePropertyTranslation } from "@/hooks/usePropertyTranslation";
 import reneHeadshot from "@/media/rene-headshot.jpg";
 
 interface Props {
@@ -11,6 +13,10 @@ interface Props {
 }
 
 export default function PropertyDetail({ property }: Props) {
+  const t = useTranslations("property");
+  const tNav = useTranslations("nav");
+  const { translatedProperty, isTranslating } = usePropertyTranslation(property);
+  const displayProperty = translatedProperty || property;
   const [activeImage, setActiveImage] = useState(0);
   const [showContactForm, setShowContactForm] = useState(false);
   const [formData, setFormData] = useState({
@@ -22,7 +28,7 @@ export default function PropertyDetail({ property }: Props) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Thank you for your inquiry. Rene will be in touch shortly.");
+    alert(t("formSuccess"));
     setShowContactForm(false);
   };
 
@@ -45,7 +51,7 @@ export default function PropertyDetail({ property }: Props) {
             </Link>
             <span className="text-[var(--muted)]">/</span>
             <Link href="/#listings" className="text-[var(--muted)] hover:text-[var(--foreground)] transition-colors">
-              Properties
+              {tNav("properties")}
             </Link>
             <span className="text-[var(--muted)]">/</span>
             <span className="text-[var(--foreground)]">{property.city}</span>
@@ -144,29 +150,34 @@ export default function PropertyDetail({ property }: Props) {
               <div className="grid grid-cols-4 gap-6 py-8 border-y border-[var(--border)] mb-12">
                 <div>
                   <p className="font-serif text-2xl text-[var(--foreground)]">{property.beds}</p>
-                  <p className="text-[var(--muted)] text-sm">Bedrooms</p>
+                  <p className="text-[var(--muted)] text-sm">{t("beds")}</p>
                 </div>
                 <div>
                   <p className="font-serif text-2xl text-[var(--foreground)]">{property.baths}</p>
-                  <p className="text-[var(--muted)] text-sm">Bathrooms</p>
+                  <p className="text-[var(--muted)] text-sm">{t("baths")}</p>
                 </div>
                 <div>
                   <p className="font-serif text-2xl text-[var(--foreground)]">{property.sqft}</p>
-                  <p className="text-[var(--muted)] text-sm">Sq Ft</p>
+                  <p className="text-[var(--muted)] text-sm">{t("sqft")}</p>
                 </div>
                 <div>
                   <p className="font-serif text-2xl text-[var(--foreground)]">{property.yearBuilt}</p>
-                  <p className="text-[var(--muted)] text-sm">Year Built</p>
+                  <p className="text-[var(--muted)] text-sm">{t("yearBuilt")}</p>
                 </div>
               </div>
 
               {/* Description */}
               <div className="mb-12">
                 <h2 className="font-serif text-2xl text-[var(--foreground)] mb-6">
-                  Overview
+                  {t("overview")}
+                  {isTranslating && (
+                    <span className="ml-2 text-sm text-[var(--muted)] font-normal">
+                      ...
+                    </span>
+                  )}
                 </h2>
                 <div className="space-y-4">
-                  {property.description.split("\n\n").map((paragraph, index) => (
+                  {displayProperty.description.split("\n\n").map((paragraph, index) => (
                     <p key={index} className="text-[var(--muted)] leading-relaxed">
                       {paragraph}
                     </p>
@@ -177,11 +188,11 @@ export default function PropertyDetail({ property }: Props) {
               {/* Features */}
               <div className="mb-12">
                 <h2 className="font-serif text-2xl text-[var(--foreground)] mb-6">
-                  Features
+                  {t("features")}
                 </h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {property.features.map((feature) => (
-                    <div key={feature} className="flex items-center space-x-3">
+                  {displayProperty.features.map((feature, index) => (
+                    <div key={index} className="flex items-center space-x-3">
                       <div className="w-1 h-1 bg-[var(--foreground)]" />
                       <span className="text-[var(--muted)] text-sm">{feature}</span>
                     </div>
@@ -192,18 +203,18 @@ export default function PropertyDetail({ property }: Props) {
               {/* Details */}
               <div>
                 <h2 className="font-serif text-2xl text-[var(--foreground)] mb-6">
-                  Details
+                  {t("details")}
                 </h2>
                 <div className="grid grid-cols-2 gap-x-8 gap-y-4">
                   {[
-                    { label: "Property Type", value: property.type },
-                    { label: "Status", value: property.status },
-                    { label: "Year Built", value: property.yearBuilt },
-                    { label: "Lot Size", value: property.lotSize },
-                    { label: "Parking", value: property.parking },
-                    { label: "MLS #", value: property.mlsNumber },
-                    { label: "Listed", value: formatDate(property.listedDate) },
-                    { label: "Living Area", value: `${property.sqft} sq ft` },
+                    { label: t("propertyType"), value: displayProperty.type },
+                    { label: t("status"), value: displayProperty.status },
+                    { label: t("yearBuilt"), value: property.yearBuilt },
+                    { label: t("lotSize"), value: displayProperty.lotSize },
+                    { label: t("parking"), value: displayProperty.parking },
+                    { label: t("mlsNumber"), value: property.mlsNumber },
+                    { label: t("listedDate"), value: formatDate(property.listedDate) },
+                    { label: t("sqft"), value: `${property.sqft}` },
                   ].map((detail) => (
                     <div key={detail.label} className="flex justify-between py-3 border-b border-[var(--border)]">
                       <span className="text-[var(--muted)] text-sm">{detail.label}</span>
@@ -246,7 +257,7 @@ export default function PropertyDetail({ property }: Props) {
                       onClick={() => setShowContactForm(!showContactForm)}
                       className="block w-full py-3 bg-[var(--foreground)] text-[var(--background)] text-center text-[11px] tracking-[0.15em] uppercase hover:opacity-80 transition-opacity"
                     >
-                      Inquire
+                      {tNav("inquire")}
                     </button>
                   </div>
 
@@ -255,7 +266,7 @@ export default function PropertyDetail({ property }: Props) {
                     <form onSubmit={handleSubmit} className="mt-6 pt-6 border-t border-[var(--border)] space-y-4">
                       <input
                         type="text"
-                        placeholder="Name"
+                        placeholder={t("formName")}
                         required
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -263,14 +274,14 @@ export default function PropertyDetail({ property }: Props) {
                       />
                       <input
                         type="email"
-                        placeholder="Email"
+                        placeholder={t("formEmail")}
                         required
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         className="w-full px-4 py-3 border border-[var(--border)] bg-transparent text-[var(--foreground)] text-sm"
                       />
                       <textarea
-                        placeholder="Message"
+                        placeholder={t("formMessage")}
                         rows={3}
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
@@ -280,7 +291,7 @@ export default function PropertyDetail({ property }: Props) {
                         type="submit"
                         className="w-full py-3 bg-[var(--foreground)] text-[var(--background)] text-[11px] tracking-[0.15em] uppercase"
                       >
-                        Send
+                        {t("formSubmit")}
                       </button>
                     </form>
                   )}
@@ -289,23 +300,23 @@ export default function PropertyDetail({ property }: Props) {
                 {/* Tour CTA */}
                 <div className="bg-[#1A1A1A] p-8 text-white">
                   <h3 className="font-serif text-xl mb-3">
-                    Private Showing
+                    {t("scheduleViewing")}
                   </h3>
                   <p className="text-white/70 text-sm mb-6 leading-relaxed">
-                    Experience this property in person with a private tour.
+                    {t("tourDescription")}
                   </p>
                   <button className="w-full py-3 bg-white text-black text-[11px] tracking-[0.15em] uppercase hover:bg-white/90 transition-colors">
-                    Schedule Tour
+                    {t("scheduleTour")}
                   </button>
                 </div>
 
                 {/* Actions */}
                 <div className="flex gap-4">
                   <button className="flex-1 py-3 border border-[var(--border)] text-[var(--muted)] text-[11px] tracking-wider uppercase hover:border-[var(--foreground)] hover:text-[var(--foreground)] transition-colors">
-                    Save
+                    {t("save")}
                   </button>
                   <button className="flex-1 py-3 border border-[var(--border)] text-[var(--muted)] text-[11px] tracking-wider uppercase hover:border-[var(--foreground)] hover:text-[var(--foreground)] transition-colors">
-                    Share
+                    {t("share")}
                   </button>
                 </div>
               </div>
@@ -324,7 +335,7 @@ export default function PropertyDetail({ property }: Props) {
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            <span>All Properties</span>
+            <span>{t("back")}</span>
           </Link>
         </div>
       </section>
